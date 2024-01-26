@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "02V4XNZ+PJknw9jzHg8ppTP97ICUGod6NNiTAfIj0XHUZEHFfSw4wJFidDBL+/GL5nRWbX+n/NN8CZ5RYt9CUg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\adila\\Desktop\\ef-apps\\Excel\\Excel\\Excel\\Excel.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\adila\\.nuget\\packages\\documentformat.openxml\\3.0.1\\documentformat.openxml.3.0.1.nupkg.sha512",
+    "C:\\Users\\adila\\.nuget\\packages\\documentformat.openxml.framework\\3.0.1\\documentformat.openxml.framework.3.0.1.nupkg.sha512",
+    "C:\\Users\\adila\\.nuget\\packages\\system.io.packaging\\8.0.0\\system.io.packaging.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

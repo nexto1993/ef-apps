@@ -1,0 +1,38 @@
+﻿@page
+@model Excel.Pages.Upload.UploadExcelModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data">
+    <label for="fileUpload">Upload Excel File:</label>
+    <input type="file" id="fileUpload" name="fileUpload" accept=".xls,.xlsx" />
+    <input type="submit" value="Upload" />
+    <button type="button" onclick="clearFileInput()">Clear</button>
+</form>
+
+@if (Model.Contacts != null)
+{
+    <h2>Contacts:</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Mobile Number</th>
+        </tr>
+        @foreach (var contact in Model.Contacts)
+        {
+            <tr>
+                <td>@contact.Name</td>
+                <td>@contact.MobileNumber</td>
+            </tr>
+        }
+    </table>
+}
+
+
+@section Scripts {
+    <script>
+        function clearFileInput() {
+            document.getElementById('fileUpload').value = '';
+        }
+    </script>
+}
