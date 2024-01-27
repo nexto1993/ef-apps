@@ -1,8 +1,16 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Excel.Pages.Data;
+using Excel.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=CodingWiki;TrustServerCertificate=True;Trusted_Connection=True;"));
+builder.Services.AddControllers();
+builder.Services.AddHttpClient<EmployeeService>();
+builder.Services.AddHostedService<EmployeeUpdateWorker>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,7 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.MapControllers(); // Add this line
 app.MapRazorPages();
 
 app.Run();
