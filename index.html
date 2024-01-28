@@ -1,66 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send SMS to Employees</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-
+  .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        .navbar {
+            background-color: #007bff; /* Bootstrap primary color */
+        }
     </style>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">بوابة الرسائل القصيرة</a>
+        <a class="navbar-brand" href="#">
+            بوابة الرسائل القصيرة
+        </a>
         <!-- Other navigation items here -->
     </div>
 </nav>
 
 <div class="container mt-4">
-    <h2>إرسال رسائل قصيرة إلى الموظفين</h2>
-    <form id="smsForm">
-        <div class="mb-3">
-            <label for="smsOption" class="form-label">اختر خيار إرسال الرسائل القصيرة</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="smsOption" id="allEmployees" value="all" checked>
-                <label class="form-check-label" for="allEmployees">جميع الموظفين</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="smsOption" id="specificDepartment" value="department">
-                <label class="form-check-label" for="specificDepartment">قسم معين</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="smsOption" id="viaExcel" value="excel">
-                <label class="form-check-label" for="viaExcel">عبر ملف إكسل</label>
-            </div>
-        </div>
+    <div class="card">
 
-        <div class="mb-3 d-none" id="departmentSection">
-            <label for="departmentSelect" class="form-label">اختر القسم</label>
-            <select class="form-select" id="departmentSelect">
-                <!-- Department options here -->
-            </select>
-        </div>
+    <div class="card-header">
+        <h4>إرسال رسائل قصيرة إلى الموظفين</h4>
+    </div>
+    <div class="card-body">
+        <form id="smsForm">
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="smsOption" class="form-label">اختر خيار إرسال الرسائل القصيرة</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="smsOption" id="allEmployees" value="all" checked>
+                            <label class="form-check-label" for="allEmployees">جميع الموظفين</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="smsOption" id="specificDepartment" value="department">
+                            <label class="form-check-label" for="specificDepartment">قسم معين</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="smsOption" id="viaExcel" value="excel">
+                            <label class="form-check-label" for="viaExcel">عبر ملف إكسل</label>
+                        </div>
+                    </div>
+            
+                    <div class="mb-3 d-none" id="departmentSection">
+                        <label for="departmentSelect" class="form-label">اختر القسم</label>
+                        <select class="form-select" id="departmentSelect">
+                            <!-- Department options here -->
+                        </select>
+                    </div>
+            
+                    <div class="mb-3 d-none" id="excelSection">
+                        <label for="excelFile" class="form-label">رفع ملف إكسل</label>
+                        
+                        <input type="file" class="form-control" id="excelFile">
+                        <button type="button" class="btn btn-secondary mt-4" id="clearExcelFile">مسح الملف</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary">إرسال الرسائل</button>
 
-        <div class="mb-3 d-none" id="excelSection">
-            <label for="excelFile" class="form-label">رفع ملف إكسل</label>
-            <input type="file" class="form-control" id="excelFile">
+                </div>
+            </div>
+          
         </div>
-
-        <button type="submit" class="btn btn-primary">إرسال الرسائل</button>
-    </form>
+    
+        </form>
+    </div>
+   </div>
 </div>
 
-
 <script>
-    document.getElementById('smsForm').addEventListener('change', function(e) {
-        var value = e.target.value;
-        var departmentSection = document.getElementById('departmentSection');
-        var excelSection = document.getElementById('excelSection');
-        
-        departmentSection.classList.toggle('d-none', value !== 'department');
-        excelSection.classList.toggle('d-none', value !== 'excel');
-    });
+     document.addEventListener('DOMContentLoaded', function () {
+            var radioButtons = document.querySelectorAll('input[name="smsOption"]');
+            var departmentSection = document.getElementById('departmentSection');
+            var excelSection = document.getElementById('excelSection');
+
+            function toggleSections() {
+                var selectedValue = document.querySelector('input[name="smsOption"]:checked').value;
+                departmentSection.classList.toggle('d-none', selectedValue !== 'department');
+                excelSection.classList.toggle('d-none', selectedValue !== 'excel');
+            }
+
+            radioButtons.forEach(function(radio) {
+                radio.addEventListener('change', toggleSections);
+            });
+
+            toggleSections(); // Set initial visibility
+            document.getElementById('clearExcelFile').addEventListener('click', function() {
+                document.getElementById('excelFile').value = '';
+            });
+        });
 </script>
 </body>
 </html>
