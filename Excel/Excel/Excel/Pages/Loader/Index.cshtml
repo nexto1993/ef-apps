@@ -1,0 +1,63 @@
+﻿@page
+@model Excel.Pages.Loader.IndexModel
+@{
+}
+<div id="loadingIndicator" style="display: none;">Loading...</div>
+<div id="apiResults" style="display: none;">
+    <!-- API results will be displayed here -->
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#loadingIndicator').show();
+
+            $.ajax({
+                url: 'https://api.publicapis.org/entries',
+                type: 'GET',
+                success: function (response) {
+                    // Wait for 3 seconds before processing the response
+                    setTimeout(function () {
+                        $('#loadingIndicator').hide();
+                        $('#apiResults').show();
+                        // Process and display the results
+                        console.log(response);
+                        // For demonstration, let's just display the count of APIs
+                        $('#apiResults').html('Total APIs found: ' + response.count);
+                    }, 3000); // 3000 milliseconds = 3 seconds
+                },
+                error: function (xhr, status, error) {
+                    setTimeout(function () {
+                        $('#loadingIndicator').hide();
+                        $('#apiResults').html('An error occurred: ' + error).show();
+                    }, 3000);
+                }
+            });
+        });
+
+        // without timer
+        $(document).ready(function () {
+            $('#loadingIndicator').show();
+
+            $.ajax({
+                url: 'https://api.publicapis.org/entries',
+                type: 'GET',
+                success: function (response) {
+                    $('#loadingIndicator').hide();
+                    $('#apiResults').show();
+                    // Process and display the results
+                    console.log(response);
+                    // For demonstration, let's just display the count of APIs
+                    $('#apiResults').html('Total APIs found: ' + response.count);
+                },
+                error: function (xhr, status, error) {
+                    $('#loadingIndicator').hide();
+                    $('#apiResults').html('An error occurred: ' + error).show();
+                }
+            });
+        });
+
+
+    </script>
+}
