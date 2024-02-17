@@ -1,0 +1,26 @@
+﻿@page
+@model Excel.Pages.Select2.IndexModel
+
+<form method="post">
+    @* <select asp-for="SelectedOptions" asp-items="Model.Options" id="mySelect2" class="form-control" multiple="multiple">
+    </select> *@
+
+    <select id="mySelect2" class="form-control" name="myOptions" multiple="multiple">
+        <option value="">Select an option...</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <!-- More options -->
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        $('#mySelect2').select2({
+            placeholder: "Search and select options",
+            allowClear: true,
+            minimumResultsForSearch: 0 // Always show the search box
+        });
+       
+    </script>
+}
