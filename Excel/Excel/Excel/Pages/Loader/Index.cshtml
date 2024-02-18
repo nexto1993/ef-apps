@@ -2,55 +2,75 @@
 @model Excel.Pages.Loader.IndexModel
 @{
 }
-<div id="selectContainer">
-    <div id="loadingIndicator">Loading...</div>
+<div id="progressContainer" class="progress" style="height: 30px;">
+    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <span>Loading...</span>
+    </div>
 </div>
-
+<div id="selectContainer" style="display: none;">
+</div>
 @section Scripts {
     <script>
         $(document).ready(function () {
+            $('#progressBar').css('width', '50%').attr('aria-valuenow', 50);
+            var apiUrl = '@Model.EntriesUrl';
             $.ajax({
-                url: 'https://api.publicapis.org/entries',
+                url: apiUrl,
                 type: 'GET',
                 success: function (response) {
-                    setTimeout(function () { 
-                        var selectHtml = '<select id="apiSelect">';
-                        response.entries.forEach(function (entry) {
-                            selectHtml += '<option value="' + entry.API + '">' + entry.Description + '</option>';
-                        });
-                        selectHtml += '</select>';
+                    $('#progressBar').css('width', '100%').attr('aria-valuenow', 100);
 
-                        $('#loadingIndicator').remove(); 
-                        $('#selectContainer').html(selectHtml); 
-                    }, 3000);
-                },
-                error: function (xhr, status, error) {
-                    $('#selectContainer').html('An error occurred: ' + error); 
-                }
-            });
-        });
-
-
-        $(document).ready(function () {
-            $.ajax({
-                url: 'https://api.publicapis.org/entries',
-                type: 'GET',
-                success: function (response) {
-                    var selectHtml = '<select id="apiSelect">';
-                   
+                    var selectHtml = '<select id="apiSelect" class="form-control">';
                     response.entries.forEach(function (entry) {
-                        selectHtml += '<option value="' + entry.API + '">' + entry.Description + '</option>';
+                        selectHtml += `<option value="${entry.API}">${entry.Description}</option>`;
                     });
                     selectHtml += '</select>';
 
-                    $('#loadingIndicator').remove(); 
-                    $('#selectContainer').html(selectHtml); 
+                    $('#progressContainer').hide();
+                    $('#selectContainer').html(selectHtml).show();
                 },
                 error: function (xhr, status, error) {
-                    $('#selectContainer').html('An error occurred: ' + error); 
+                    $('#progressContainer').hide();
+                    $('#selectContainer').html('An error occurred: ' + error).show();
                 }
             });
         });
+
+
+
+
+
+        // $(document).ready(function () {
+        //     $('#progressBar').css('width', '50%').attr('aria-valuenow', 50);
+
+        //     var username = 'your_username';
+        //     var password = 'your_password';
+        //     var basicAuth = 'Basic ' + btoa(username + ':' + password);
+
+        //     $.ajax({
+        //         url: 'https://api.publicapis.org/entries',
+        //         type: 'GET',
+        //         headers: {
+        //             "Authorization": basicAuth
+        //         },
+        //         success: function (response) {
+        //             $('#progressBar').css('width', '100%').attr('aria-valuenow', 100);
+
+        //             var selectHtml = '<select id="apiSelect" class="form-control">';
+        //             response.entries.forEach(function (entry) {
+        //                 selectHtml += `<option value="${entry.API}">${entry.Description}</option>`;
+        //             });
+        //             selectHtml += '</select>';
+
+        //             $('#progressContainer').hide();
+        //             $('#selectContainer').html(selectHtml).show();
+        //         },
+        //         error: function (xhr, status, error) {
+        //             $('#progressContainer').hide();
+        //             $('#selectContainer').html('An error occurred: ' + error).show();
+        //         }
+        //     });
+        // });
 
 
     </script>
